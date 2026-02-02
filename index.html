@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premier League Position Predictor 2025-26</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">2025-26 season model</p>
+          <h1>Premier League Position Predictor</h1>
+          <p class="subtitle">
+            Estimate where a team will finish using current form, remaining fixtures, and historical
+            performance at this stage of the season.
+          </p>
+        </div>
+        <div class="badge">
+          <span>Algorithm</span>
+          <strong>Form × Fixtures × History</strong>
+        </div>
+      </header>
+
+      <section class="panel">
+        <form id="predictor-form" class="grid">
+          <div class="field">
+            <label for="team">Select team</label>
+            <select id="team" name="team"></select>
+          </div>
+
+          <div class="field">
+            <label for="form">Current form (points per game, last 6)</label>
+            <input id="form" type="number" min="0" max="3" step="0.1" value="1.7" />
+            <small>0.0 = losing streak · 3.0 = perfect run</small>
+          </div>
+
+          <div class="field">
+            <label for="fixture">Remaining fixtures difficulty</label>
+            <input id="fixture" type="range" min="1" max="5" step="0.1" value="3" />
+            <div class="range-value"><span id="fixture-output">3.0</span> / 5 (higher = harder)</div>
+          </div>
+
+          <div class="field">
+            <label for="history">Historical stage performance</label>
+            <input id="history" type="range" min="-6" max="6" step="0.5" value="1" />
+            <div class="range-value">
+              <span id="history-output">+1.0</span> pts vs. similar opponents at this stage
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="weight-form">Weight: current form</label>
+            <input id="weight-form" type="range" min="0.2" max="0.6" step="0.05" value="0.4" />
+            <div class="range-value"><span id="weight-form-output">0.40</span></div>
+          </div>
+
+          <div class="field">
+            <label for="weight-fixture">Weight: fixtures</label>
+            <input id="weight-fixture" type="range" min="0.2" max="0.6" step="0.05" value="0.35" />
+            <div class="range-value"><span id="weight-fixture-output">0.35</span></div>
+          </div>
+
+          <div class="field">
+            <label for="weight-history">Weight: history</label>
+            <input id="weight-history" type="range" min="0.1" max="0.4" step="0.05" value="0.25" />
+            <div class="range-value"><span id="weight-history-output">0.25</span></div>
+          </div>
+
+          <button class="primary" type="submit">Predict finish</button>
+        </form>
+      </section>
+
+      <section class="results" id="results">
+        <div class="results-card">
+          <h2>Projected finish</h2>
+          <div class="result-main">
+            <span class="position" id="predicted-position">6th</span>
+            <div>
+              <p class="result-team" id="result-team">Tottenham Hotspur</p>
+              <p class="result-points">Projected points: <strong id="projected-points">62</strong></p>
+            </div>
+          </div>
+          <div class="confidence">
+            <div class="confidence-bar"><span id="confidence-bar"></span></div>
+            <p>Confidence: <strong id="confidence">68%</strong></p>
+          </div>
+        </div>
+
+        <div class="insights">
+          <h3>Why this projection?</h3>
+          <ul id="insight-list"></ul>
+        </div>
+      </section>
+
+      <section class="panel details">
+        <h3>Algorithm details</h3>
+        <ol>
+          <li>Start with current points and matches played from the live table snapshot.</li>
+          <li>Estimate remaining points using weighted form, fixture difficulty, and historical results.</li>
+          <li>Translate total points into a predicted position using recent point thresholds.</li>
+        </ol>
+        <p class="note">
+          This is a lightweight model for exploring scenarios. Adjust the sliders to reflect new
+          form streaks or fixture difficulty swings.
+        </p>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
